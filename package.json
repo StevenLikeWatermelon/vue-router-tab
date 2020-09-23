@@ -1,6 +1,6 @@
 {
   "name": "xl-vue-router-tab",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Vue.js tab components, based on Vue Router",
   "keywords": [
     "vue",
@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/bhuh12/vue-router-tab/issues"
   },
-  "main": "dist/lib/vue-router-tab.umd.min.js",
+  "main": "dist/lib/xl-vue-router-tab.umd.min.js",
   "scripts": {
     "demo:dev": "vue-cli-service serve --open",
     "demo:build": "vue-cli-service build",
