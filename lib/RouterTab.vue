@@ -84,7 +84,7 @@
             @drop.prevent="onsplitDrop"
           >
             <iframe
-              v-show="hasSplitDropped"
+              v-if="hasSplitDropped && !onDragSort"
               :key="currentDraggledIframe"
               :src="currentDraggledIframe"
               :name="iframeNamePrefix + currentDraggledIframe"
