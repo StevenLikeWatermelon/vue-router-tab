@@ -39,33 +39,62 @@
 
     <!-- 页面容器 -->
     <div class="router-tab__container">
-      <router-alive
-        page-class="router-tab-page"
-        :keep-alive="keepAlive"
-        :reuse="reuse"
-        :max="maxAlive"
-        :transition="pageTrans"
-        @ready="onAliveReady"
-        @change="onAliveChange"
-      />
+      <Split class="xl-split-panel">
+        <SplitArea
+          id="splitArea"
+          :size="100"
+          :min-size="0"
+          class="content-split"
+        >
+          <div class="content-split-left">
+            <router-alive
+              page-class="router-tab-page"
+              :keep-alive="keepAlive"
+              :reuse="reuse"
+              :max="maxAlive"
+              :transition="pageTrans"
+              @ready="onAliveReady"
+              @change="onAliveChange"
+            />
 
-      <!-- iframe 页面 -->
-      <transition-group
-        v-bind="pageTrans"
-        tag="div"
-        class="router-tab__iframes"
-      >
-        <iframe
-          v-for="url in iframes"
-          v-show="url === currentIframe"
-          :key="url"
-          :src="url"
-          :name="iframeNamePrefix + url"
-          frameborder="0"
-          class="router-tab__iframe"
-          @load="iframeLoaded(url)"
-        />
-      </transition-group>
+            <!-- iframe 页面 -->
+            <transition-group
+              v-bind="pageTrans"
+              tag="div"
+              class="router-tab__iframes"
+            >
+              <iframe
+                v-for="url in iframes"
+                v-show="url === currentIframe"
+                :key="url"
+                :src="url"
+                :name="iframeNamePrefix + url"
+                frameborder="0"
+                class="router-tab__iframe"
+                @load="iframeLoaded(url)"
+              />
+            </transition-group>
+          </div>
+        </SplitArea>
+        <SplitArea :size="0" :min-size="0">
+          <div
+            class="drop-iframe"
+            @dragover.prevent="changeBackground"
+            @dragleave.prevent="resetBackground"
+            @drop.prevent="onsplitDrop"
+          >
+            <iframe
+              v-show="hasSplitDropped"
+              :key="currentDraggledIframe"
+              :src="currentDraggledIframe"
+              :name="iframeNamePrefix + currentDraggledIframe"
+              frameborder="0"
+              class="router-tab__iframe"
+              @load="iframeLoaded(currentDraggledIframe)"
+            />
+          </div>
+        </SplitArea>
+      </Split>
     </div>
 
     <!-- 右键菜单 -->
@@ -80,3 +109,29 @@
 </template>
 
 <script src="./RouterTab.js"></script>
+
+<style lang="scss" scoped>
+.xl-split-panel {
+  width: 100%;
+  height: 100%;
+}
+.content-split {
+  position: relative;
+}
+.content-split-left {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.drop-iframe {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+</style>
+
+<style lang="scss">
+.gutter.gutter-horizontal {
+  background-color: rgba(66, 185, 131, 0.2);
+}
+</style>

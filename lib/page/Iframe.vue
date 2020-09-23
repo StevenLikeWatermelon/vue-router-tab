@@ -6,6 +6,7 @@
 // Iframe 路由元
 export const iframeMeta = {
   key: route => `iframe-${route.params.src}`,
+  src: route => `${route.params.src}`,
   title: route => route.params.title,
   icon: route => route.params.icon
 }
